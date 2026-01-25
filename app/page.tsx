@@ -1,17 +1,20 @@
 import Script from "next/script";
 import DeliveryLandingPage from "./components/DeliveryLandingPage";
 
-export default function Page({
+// Next.js 15 (App Router): `searchParams` is typed as a Promise.
+type SearchParams = { cat?: string; area?: string };
+
+export default async function Page({
   searchParams,
 }: {
-  searchParams?: { cat?: string; area?: string };
+  searchParams?: Promise<SearchParams>;
 }) {
-  const cat = searchParams?.cat ?? "الكل";
-  const area = searchParams?.area ?? "";
+  const sp = (await searchParams) ?? {};
+  const cat = sp.cat ?? "الكل";
+  const area = sp.area ?? "";
 
   return (
     <>
-      {/* JSON-LD structured data */}
       <Script
         id="ld-org"
         type="application/ld+json"
@@ -24,7 +27,8 @@ export default function Page({
             url: "https://sahm-delivery.ae/",
             logo: "https://sahm-delivery.ae/logo.png",
             image: "https://sahm-delivery.ae/og.jpg",
-            description: "خدمة توصيل سريعة وموثوقة داخل الإمارات: توصيل أفراد وشركات، توصيل نفس اليوم ودعم مباشر.",
+            description:
+              "خدمة توصيل سريعة وموثوقة داخل الإمارات: توصيل أفراد وشركات، توصيل نفس اليوم ودعم مباشر.",
             areaServed: "AE",
             availableLanguage: ["ar"],
             sameAs: [],
@@ -57,4 +61,4 @@ export default function Page({
       <DeliveryLandingPage cat={cat} area={area} />
     </>
   );
-} 
+}
