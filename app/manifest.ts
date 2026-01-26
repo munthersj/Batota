@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "اسم التطبيق",
+    name: "بطوطة ديليفري",
     short_name: "App",
     start_url: "/",
     display: "standalone",

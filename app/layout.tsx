@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   keywords: [
     // البراند
     "بطوطة ديليفري",
-    "Batota Delivery",
+    "Batoto Delivery",
     "شركة بطوطة للتوصيل",
 
     // خدمات عامة
