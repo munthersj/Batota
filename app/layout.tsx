@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://sahm-delivery.ae"),
+  metadataBase: new URL("https://batoto-delivery.cloud"),
 
   title: {
     default: "بطوطةللتوصيل – نقل وتوصيل داخل الإمارات",
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   keywords: [
     // البراند
     "بطوطة ديليفري",
-    "Sahm Delivery",
+    "Batota Delivery",
     "شركة بطوطة للتوصيل",
 
     // خدمات عامة
@@ -71,7 +71,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "ar_AE",
-    url: "https://sahm-delivery.ae",
+    url: "https://batoto-delivery.cloud",
     siteName: "بطوطة للتوصيل",
     title: "بطوطة للتوصيل – نقل وتوصيل داخل الإمارات",
     description:
