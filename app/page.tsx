@@ -1,8 +1,58 @@
-import Script from "next/script";
+import type { Metadata } from "next";
+
 import DeliveryLandingPage from "./components/DeliveryLandingPage";
 
-// Next.js 15 (App Router): `searchParams` is typed as a Promise.
 type SearchParams = { cat?: string; area?: string };
+
+export async function generateMetadata({
+  searchParams,
+}: {
+  searchParams?: Promise<SearchParams>;
+}): Promise<Metadata> {
+  const sp = (await searchParams) ?? {};
+  const cat = sp.cat?.trim();
+  const area = sp.area?.trim();
+  const hasFilters = !!(cat || area);
+
+  const parts = ["بطوطة ديليفري"];
+  if (cat) parts.push(cat);
+  if (area) parts.push(area);
+  const title = parts.join(" – ");
+
+  const description = [
+    "بطوطة للتوصيل شركة نقل وتوصيل داخل الإمارات العربية المتحدة، نقدم توصيل أغراض وطرود، نقل بين المدن مثل عجمان والشارقة ودبي وأبوظبي، توصيل نفس اليوم، وخدمات توصيل للشركات مع تواصل مباشر وسريع عبر واتساب.",
+    cat ? `القسم: ${cat}.` : "",
+    area ? `المنطقة: ${area}.` : "",
+    "تواصل مباشر عبر واتساب.",
+  ]
+    .filter(Boolean)
+    .join(" ");
+
+  return {
+    title,
+    description,
+
+    // ✅ دائماً خليها للـ Home حتى ما يصير Duplicate Content
+    alternates: { canonical: "/" },
+
+    // ✅ لا تفهرس صفحات الفلاتر
+    robots: hasFilters
+      ? {
+          index: false,
+          follow: true,
+          googleBot: { index: false, follow: true },
+        }
+      : {
+          index: true,
+          follow: true,
+          googleBot: { index: true, follow: true },
+        },
+
+    // ✅ مشاركة أجمل حتى لو canonical للـ Home
+    openGraph: { title, description },
+    twitter: { title, description },
+  };
+}
 
 export default async function Page({
   searchParams,
@@ -15,49 +65,7 @@ export default async function Page({
 
   return (
     <>
-      <Script
-        id="ld-org"
-        type="application/ld+json"
-        strategy="afterInteractive"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "LocalBusiness",
-            name: "سهم للتوصيل",
-            url: "https://sahm-delivery.ae/",
-            logo: "https://sahm-delivery.ae/logo.png",
-            image: "https://sahm-delivery.ae/og.jpg",
-            description:
-              "خدمة توصيل سريعة وموثوقة داخل الإمارات: توصيل أفراد وشركات، توصيل نفس اليوم ودعم مباشر.",
-            areaServed: "AE",
-            availableLanguage: ["ar"],
-            sameAs: [],
-            contactPoint: [
-              {
-                "@type": "ContactPoint",
-                telephone: "+971500000000",
-                contactType: "customer support",
-                availableLanguage: ["ar"],
-              },
-            ],
-          }),
-        }}
-      />
-      <Script
-        id="ld-website"
-        type="application/ld+json"
-        strategy="afterInteractive"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "WebSite",
-            name: "سهم للتوصيل",
-            url: "https://sahm-delivery.ae/",
-            inLanguage: "ar",
-          }),
-        }}
-      />
-
+      {/* JSON-LD scripts ... */}
       <DeliveryLandingPage cat={cat} area={area} />
     </>
   );
