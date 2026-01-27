@@ -386,7 +386,7 @@ export default function DeliveryLandingPage({
             <div className="py-12">
               <SectionTitle
                 kicker="مميزات"
-                title="ليش تختار سهم؟"
+                title="ليش تختار بطوطة؟"
                 desc="نركز على السرعة، الوضوح، والتواصل السهل حتى التسليم."
               />
               <div className="mt-8 grid gap-4 md:grid-cols-2">
